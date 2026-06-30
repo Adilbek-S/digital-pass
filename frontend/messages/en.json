@@ -1,0 +1,133 @@
+{
+  "nav": {
+    "home": "Home",
+    "newVisit": "New Visit Request",
+    "dashboard": "Dashboard",
+    "pending": "Pending",
+    "today": "Today",
+    "invite": "Create Invitation",
+    "scan": "Scan",
+    "users": "Users",
+    "departments": "Departments",
+    "reports": "Reports",
+    "logout": "Log out"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "confirm": "Confirm",
+    "loading": "Loading…",
+    "error": "An error occurred",
+    "success": "Success",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "noData": "No data",
+    "required": "Required field"
+  },
+  "status": {
+    "PENDING_MODERATION": "Pending review",
+    "PENDING_HOST": "Awaiting host",
+    "CHANGES_REQUESTED": "Changes requested",
+    "APPROVED": "Approved",
+    "REJECTED": "Rejected",
+    "CANCELLED": "Cancelled",
+    "EXPIRED": "Expired",
+    "NO_SHOW": "No show",
+    "CHECKED_IN": "Inside",
+    "CHECKED_OUT": "Checked out"
+  },
+  "visitForm": {
+    "title": "Visit Request",
+    "subtitle": "Fill in the form to receive an electronic pass",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "John Smith",
+    "country": "Country",
+    "phone": "Phone number",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "email": "Email address",
+    "emailPlaceholder": "example@domain.com",
+    "organization": "Organisation",
+    "organizationPlaceholder": "Company name (optional)",
+    "visitDate": "Visit date",
+    "visitTime": "Visit time (optional)",
+    "purpose": "Purpose of visit",
+    "purposePlaceholder": "Describe the purpose of your visit",
+    "department": "Receiving department",
+    "employee": "Receiving employee",
+    "document": "Document (passport, ID)",
+    "documentHint": "PDF, JPEG or PNG, max 10 MB",
+    "consent": "I consent to the processing of my personal data",
+    "submit": "Submit request",
+    "submitSuccess": "Request submitted successfully",
+    "inviteTitle": "Create invitation",
+    "inviteSubtitle": "Fill in the visitor's details"
+  },
+  "visitorStatus": {
+    "title": "Your request status",
+    "yourQR": "Your QR pass",
+    "qrHint": "Present this code at the entrance",
+    "cancel": "Cancel request",
+    "cancelConfirm": "Are you sure you want to cancel this request?",
+    "editRequest": "Edit request",
+    "saveChanges": "Save changes"
+  },
+  "employee": {
+    "pendingTitle": "Pending approvals",
+    "todayTitle": "Today's visitors",
+    "approve": "Approve",
+    "reject": "Reject",
+    "revoke": "Revoke",
+    "requestChanges": "Request changes",
+    "rejectReason": "Rejection reason",
+    "rejectReasonPlaceholder": "Please provide a reason for rejection",
+    "revokeReason": "Revocation reason",
+    "changesNote": "Changes note",
+    "inviteLink": "Visitor link"
+  },
+  "guard": {
+    "title": "Access control",
+    "scanTitle": "Scan QR code",
+    "manualTitle": "Manual lookup",
+    "visitIdLabel": "Visit ID",
+    "scanBtn": "Scan with camera",
+    "lookupBtn": "Look up",
+    "green": "Access granted",
+    "yellow": "Warning",
+    "red": "Access denied",
+    "checkIn": "Register entry",
+    "checkOut": "Register exit",
+    "duplicate": "Duplicate QR scan"
+  },
+  "admin": {
+    "usersTitle": "Users",
+    "deptsTitle": "Departments",
+    "addUser": "Add user",
+    "addDept": "Add department",
+    "role": "Role",
+    "roles": {
+      "admin": "Administrator",
+      "employee": "Employee",
+      "guard": "Security guard"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "byDate": "Visitors by date",
+    "inside": "Currently inside",
+    "history": "Visit history",
+    "avgApproval": "Average approval time",
+    "rejected": "Rejected requests",
+    "noShows": "No-shows",
+    "minutes": "min"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "loginSubtitle": "National Payment Corporation of Kazakhstan",
+    "email": "Email address",
+    "password": "Password",
+    "signIn": "Sign in",
+    "invalidCredentials": "Invalid email or password"
+  }
+}

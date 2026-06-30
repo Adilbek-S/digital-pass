@@ -1,0 +1,133 @@
+{
+  "nav": {
+    "home": "Басты бет",
+    "newVisit": "Өтінім беру",
+    "dashboard": "Басқару тақтасы",
+    "pending": "Күтудегілер",
+    "today": "Бүгін",
+    "invite": "Шақыру жасау",
+    "scan": "Сканерлеу",
+    "users": "Қызметкерлер",
+    "departments": "Бөлімдер",
+    "reports": "Есептер",
+    "logout": "Шығу"
+  },
+  "common": {
+    "save": "Сақтау",
+    "cancel": "Бас тарту",
+    "close": "Жабу",
+    "confirm": "Растау",
+    "loading": "Жүктелуде…",
+    "error": "Қате пайда болды",
+    "success": "Сәтті",
+    "search": "Іздеу",
+    "filter": "Сүзгі",
+    "all": "Барлығы",
+    "noData": "Деректер жоқ",
+    "required": "Міндетті өріс"
+  },
+  "status": {
+    "PENDING_MODERATION": "Қарастырылуда",
+    "PENDING_HOST": "Қызметкер күтілуде",
+    "CHANGES_REQUESTED": "Өзгерістер қажет",
+    "APPROVED": "Мақұлданды",
+    "REJECTED": "Қабылданбады",
+    "CANCELLED": "Болдырылмады",
+    "EXPIRED": "Мерзімі өтті",
+    "NO_SHOW": "Келмеді",
+    "CHECKED_IN": "Ішінде",
+    "CHECKED_OUT": "Шықты"
+  },
+  "visitForm": {
+    "title": "Кіру өтінімі",
+    "subtitle": "Электрондық рұқсаттама алу үшін форманы толтырыңыз",
+    "fullName": "Тегі, Аты, Әкесінің аты",
+    "fullNamePlaceholder": "Иванов Иван Иванович",
+    "country": "Мемлекет",
+    "phone": "Телефон нөмірі",
+    "phonePlaceholder": "+7 (___) ___-__-__",
+    "email": "Электрондық пошта",
+    "emailPlaceholder": "example@domain.com",
+    "organization": "Ұйым",
+    "organizationPlaceholder": "Компания атауы (міндетті емес)",
+    "visitDate": "Кіру күні",
+    "visitTime": "Кіру уақыты (міндетті емес)",
+    "purpose": "Кіру мақсаты",
+    "purposePlaceholder": "Кіру мақсатын сипаттаңыз",
+    "department": "Қабылдаушы бөлім",
+    "employee": "Қабылдаушы қызметкер",
+    "document": "Құжат (паспорт, куәлік)",
+    "documentHint": "PDF, JPEG немесе PNG, 10 МБ-тан аспайды",
+    "consent": "Жеке деректерді өңдеуге келісімімді беремін",
+    "submit": "Өтінім беру",
+    "submitSuccess": "Өтінім сәтті берілді",
+    "inviteTitle": "Шақыру жасау",
+    "inviteSubtitle": "Келушіні шақыру үшін деректерді толтырыңыз"
+  },
+  "visitorStatus": {
+    "title": "Өтінімнің мәртебесі",
+    "yourQR": "Сіздің QR-рұқсаттамаңыз",
+    "qrHint": "Кіреберісте кодты көрсетіңіз",
+    "cancel": "Өтінімді болдырмау",
+    "cancelConfirm": "Өтінімді болдырмауға сенімдісіз бе?",
+    "editRequest": "Өзгерістер енгізу",
+    "saveChanges": "Өзгерістерді сақтау"
+  },
+  "employee": {
+    "pendingTitle": "Қарастырылатын өтінімдер",
+    "todayTitle": "Бүгінгі келушілер",
+    "approve": "Мақұлдау",
+    "reject": "Қабылдамау",
+    "revoke": "Кері қайтарып алу",
+    "requestChanges": "Өзгерістер сұрау",
+    "rejectReason": "Қабылдамау себебі",
+    "rejectReasonPlaceholder": "Өтінімді қабылдамау себебін көрсетіңіз",
+    "revokeReason": "Кері қайтарып алу себебі",
+    "changesNote": "Өзгерістерге түсініктеме",
+    "inviteLink": "Келуші үшін сілтеме"
+  },
+  "guard": {
+    "title": "Өткізу пункті",
+    "scanTitle": "QR-кодты сканерлеу",
+    "manualTitle": "Қолмен енгізу",
+    "visitIdLabel": "Өтінім нөмірі",
+    "scanBtn": "Камерамен сканерлеу",
+    "lookupBtn": "Табу",
+    "green": "Рұқсат берілді",
+    "yellow": "Назар аударыңыз",
+    "red": "Рұқсат берілмеді",
+    "checkIn": "Кіруді тіркеу",
+    "checkOut": "Шығуды тіркеу",
+    "duplicate": "QR-кодтың қайталануы"
+  },
+  "admin": {
+    "usersTitle": "Қызметкерлер",
+    "deptsTitle": "Бөлімдер",
+    "addUser": "Қызметкер қосу",
+    "addDept": "Бөлім қосу",
+    "role": "Рөл",
+    "roles": {
+      "admin": "Әкімші",
+      "employee": "Қызметкер",
+      "guard": "Күзетші"
+    }
+  },
+  "reports": {
+    "title": "Есептер",
+    "byDate": "Күні бойынша келушілер",
+    "inside": "Қазір ішінде",
+    "history": "Кіру тарихы",
+    "avgApproval": "Орташа келісу уақыты",
+    "rejected": "Қабылданбаған өтінімдер",
+    "noShows": "Келмегендер",
+    "minutes": "мин"
+  },
+  "auth": {
+    "loginTitle": "Жүйеге кіру",
+    "loginSubtitle": "Қазақстанның Ұлттық төлем корпорациясы",
+    "email": "Электрондық пошта",
+    "password": "Құпиясөз",
+    "signIn": "Кіру",
+    "invalidCredentials": "Қате логин немесе құпиясөз"
+  }
+}
