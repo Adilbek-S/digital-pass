@@ -109,11 +109,11 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
 
   return (
     <StaffLayout locale={locale} allowedRoles={["guard", "admin"]}>
-      <h1 className="text-2xl font-bold text-text-primary mb-6">{t("title")}</h1>
+      <h1 className="text-xl sm:text-2xl font-bold text-text-primary mb-4 sm:mb-6">{t("title")}</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Camera scan */}
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
             <ScanLine size={20} style={{color:"var(--brand-primary)"}} />
             {t("scanTitle")}
@@ -133,7 +133,7 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
         </div>
 
         {/* Manual lookup */}
-        <div className="card p-6">
+        <div className="card p-4 sm:p-6">
           <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
             <Search size={20} style={{color:"var(--brand-primary)"}} />
             {t("manualTitle")}
@@ -159,7 +159,7 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
       {result && (
         <div className="mt-6 rounded-2xl border-2 overflow-hidden animate-fade-in" style={{borderColor: cs.border}}>
           {/* Header bar */}
-          <div className="px-6 py-4 flex items-center gap-4" style={{background: cs.header}}>
+          <div className="px-4 sm:px-6 py-4 flex items-center gap-3 sm:gap-4" style={{background: cs.header}}>
             <div className="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">
               {colour === "green" ? "✓" : colour === "yellow" ? "!" : "✗"}
             </div>
@@ -175,8 +175,8 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
           </div>
 
           {/* Body */}
-          <div className="p-6" style={{background: cs.bg}}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-4 sm:p-6" style={{background: cs.bg}}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
 
               {/* Visitor info */}
               <div>
@@ -267,10 +267,10 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
 
             {/* Action buttons */}
             {(result.status === "APPROVED" || result.status === "CHECKED_IN") && (
-              <div className="mt-6 pt-5 border-t flex gap-3" style={{borderColor: cs.border}}>
+              <div className="mt-5 pt-4 border-t flex flex-col sm:flex-row gap-3" style={{borderColor: cs.border}}>
                 {result.status === "APPROVED" && (
                   <button
-                    className="btn-primary flex items-center gap-2 px-8"
+                    className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2"
                     onClick={doCheckin}
                     disabled={actionLoading}
                     style={{background: "#2e7d32"}}
@@ -281,7 +281,7 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
                 )}
                 {result.status === "CHECKED_IN" && (
                   <button
-                    className="btn-primary flex items-center gap-2 px-8"
+                    className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2"
                     onClick={doCheckout}
                     disabled={actionLoading}
                     style={{background: "#e65100"}}

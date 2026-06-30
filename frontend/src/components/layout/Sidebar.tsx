@@ -6,7 +6,7 @@ import { useAuth } from "@/lib/auth-context";
 import Image from "next/image";
 import {
   Clock, Calendar, UserPlus, ScanLine,
-  Users, Building2, BarChart3, LogOut
+  Users, Building2, BarChart3, LogOut, X
 } from "lucide-react";
 
 interface NavItem {
@@ -16,7 +16,7 @@ interface NavItem {
   roles?: string[];
 }
 
-export function Sidebar({ locale }: { locale: string }) {
+export function Sidebar({ locale, onClose }: { locale: string; onClose?: () => void }) {
   const t = useTranslations("nav");
   const { user, logout } = useAuth();
   const pathname = usePathname();
@@ -41,8 +41,17 @@ export function Sidebar({ locale }: { locale: string }) {
 
   return (
     <aside className="sidebar">
-      <div className="px-5 py-6 border-b border-white/15">
+      <div className="px-5 py-6 border-b border-white/15 flex items-center justify-between">
         <Image src="/logo/logo.svg" alt="НПК Казахстан" width={110} height={44} priority />
+        {onClose && (
+          <button
+            className="lg:hidden text-white/60 hover:text-white p-1 rounded ml-2"
+            onClick={onClose}
+            aria-label="Закрыть меню"
+          >
+            <X size={20} />
+          </button>
+        )}
       </div>
 
       <div className="px-3 py-2 flex-1 overflow-y-auto">
@@ -55,6 +64,7 @@ export function Sidebar({ locale }: { locale: string }) {
               key={item.href}
               href={item.href}
               className={`sidebar-nav-item ${isActive(item.href) ? "active" : ""}`}
+              onClick={onClose}
             >
               {item.icon}
               <span>{item.label}</span>
