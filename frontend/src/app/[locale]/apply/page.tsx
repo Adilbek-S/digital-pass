@@ -17,6 +17,22 @@ const FAKE_NAMES = [
   "Санжар Байтасов", "Асель Қожахметова", "Ербол Нұрмаханов",
 ];
 
+const SERVICES = [
+  "МСПД",
+  "СМК (Клиринг)",
+  "СМЭП",
+  "СОБС",
+  "Межбанковская система мобильных платежей",
+  "Цифровой теңге",
+  "Антифрод-центр",
+  "Удаленная идентификация (ЦОИД)",
+  "Система Открытого банкинга",
+  "Удостоверяющий центр",
+  "Межбанковская система платежных карточек",
+  "ФАСТИ",
+  "SWIFT сервисное бюро",
+];
+
 function randomDocNumber() {
   const letters = "ABCDEFGHJKLMNPRSTUVWXYZ";
   const l1 = letters[Math.floor(Math.random() * letters.length)];
@@ -36,6 +52,14 @@ export default function VisitorFormPage() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [ocrState, setOcrState] = useState<"idle" | "scanning" | "done">("idle");
+
+  // IT dept routing (for service mode)
+  const [itDeptId, setItDeptId] = useState<number | null>(null);
+  const [itEmployeeId, setItEmployeeId] = useState<number | null>(null);
+
+  // Selection mode: department or service
+  const [selectionMode, setSelectionMode] = useState<"department" | "service">("department");
+  const [selectedService, setSelectedService] = useState("");
 
   const [form, setForm] = useState({
     visitor_name: "",
@@ -67,6 +91,14 @@ export default function VisitorFormPage() {
       setCountries(c.data);
       const kz = c.data.find((x: Country) => x.is_default);
       if (kz) setForm((f) => ({ ...f, country_id: String(kz.id) }));
+      // Find IT dept and load its first employee for service routing
+      const it = (d.data as Dept[]).find((dept) => dept.code === "IT");
+      if (it) {
+        setItDeptId(it.id);
+        refApi.employees(it.id).then((r) => {
+          if (r.data.length > 0) setItEmployeeId(r.data[0].id);
+        });
+      }
     });
   }, []);
 
@@ -80,6 +112,16 @@ export default function VisitorFormPage() {
 
   const set = (field: string, value: string | boolean) =>
     setForm((f) => ({ ...f, [field]: value }));
+
+  const switchMode = (mode: "department" | "service") => {
+    setSelectionMode(mode);
+    if (mode === "service") {
+      setForm((f) => ({ ...f, department_id: "", host_employee_id: "" }));
+    } else {
+      setSelectedService("");
+    }
+    setErrors({});
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0] ?? null;
@@ -101,7 +143,11 @@ export default function VisitorFormPage() {
     if (!form.visitor_email.trim()) e.visitor_email = "Обязательно";
     if (!form.purpose.trim()) e.purpose = "Обязательно";
     if (!form.visit_date) e.visit_date = "Обязательно";
-    if (!form.department_id) e.department_id = "Обязательно";
+    if (selectionMode === "department") {
+      if (!form.department_id) e.department_id = "Обязательно";
+    } else {
+      if (!selectedService) e.selectedService = "Выберите проект или услугу";
+    }
     if (!form.data_consent) e.data_consent = "Необходимо согласие";
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -116,13 +162,22 @@ export default function VisitorFormPage() {
         docNumber.trim() ? `Документ №: ${docNumber.trim()}` : "",
         equipment.trim() ? `Техника: ${equipment.trim()}` : "",
       ].filter(Boolean).join("\n");
-      const purposeWithEquipment = extras ? `${form.purpose}\n\n${extras}` : form.purpose;
+      const basePurpose = selectionMode === "service"
+        ? `Проект/услуга: ${selectedService}\n${form.purpose}`
+        : form.purpose;
+      const purposeFinal = extras ? `${basePurpose}\n\n${extras}` : basePurpose;
+
+      const deptId = selectionMode === "service" ? itDeptId : Number(form.department_id);
+      const empId = selectionMode === "service"
+        ? itEmployeeId
+        : (form.host_employee_id ? Number(form.host_employee_id) : null);
+
       const payload: Record<string, unknown> = {
         ...form,
-        purpose: purposeWithEquipment,
+        purpose: purposeFinal,
         country_id: Number(form.country_id),
-        department_id: Number(form.department_id),
-        host_employee_id: form.host_employee_id ? Number(form.host_employee_id) : null,
+        department_id: deptId,
+        host_employee_id: empId,
         visit_time: form.visit_time || null,
       };
       const res = await visitApi.createPublic(payload);
@@ -330,23 +385,75 @@ export default function VisitorFormPage() {
                 <input type="time" className="form-input" value={form.visit_time} onChange={(e) => set("visit_time", e.target.value)} />
               </div>
 
-              {/* Подразделение */}
-              <div>
-                <label className="form-label">{t("department")} *</label>
-                <select className="form-input" value={form.department_id} onChange={(e) => { set("department_id", e.target.value); set("host_employee_id", ""); }}>
-                  <option value="">—</option>
-                  {depts.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
-                </select>
-                {errors.department_id && <p className="form-error">{errors.department_id}</p>}
-              </div>
+              {/* ── Принимающая сторона ─────────────────────────────────── */}
+              <div className="md:col-span-2">
+                <p className="form-label mb-3">Принимающая сторона *</p>
 
-              {/* Сотрудник */}
-              <div>
-                <label className="form-label">{t("employee")}</label>
-                <select className="form-input" value={form.host_employee_id} onChange={(e) => set("host_employee_id", e.target.value)} disabled={!form.department_id}>
-                  <option value="">—</option>
-                  {employees.map((emp) => <option key={emp.id} value={emp.id}>{emp.full_name}</option>)}
-                </select>
+                {/* Segmented control */}
+                <div className="inline-flex rounded-xl border border-border bg-bg-subtle p-1 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => switchMode("department")}
+                    className="px-5 py-2 rounded-lg text-sm font-medium transition-all"
+                    style={selectionMode === "department"
+                      ? { background: "var(--brand-primary)", color: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,.15)" }
+                      : { color: "var(--text-muted)" }}
+                  >
+                    Подразделение
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => switchMode("service")}
+                    className="px-5 py-2 rounded-lg text-sm font-medium transition-all"
+                    style={selectionMode === "service"
+                      ? { background: "var(--brand-primary)", color: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,.15)" }
+                      : { color: "var(--text-muted)" }}
+                  >
+                    Проект / услуга
+                  </button>
+                </div>
+
+                {selectionMode === "department" ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="form-label">{t("department")}</label>
+                      <select
+                        className="form-input"
+                        value={form.department_id}
+                        onChange={(e) => { set("department_id", e.target.value); set("host_employee_id", ""); }}
+                      >
+                        <option value="">—</option>
+                        {depts.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+                      </select>
+                      {errors.department_id && <p className="form-error">{errors.department_id}</p>}
+                    </div>
+                    <div>
+                      <label className="form-label">{t("employee")}</label>
+                      <select
+                        className="form-input"
+                        value={form.host_employee_id}
+                        onChange={(e) => set("host_employee_id", e.target.value)}
+                        disabled={!form.department_id}
+                      >
+                        <option value="">—</option>
+                        {employees.map((emp) => <option key={emp.id} value={emp.id}>{emp.full_name}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="form-label">Проект / услуга</label>
+                    <select
+                      className="form-input max-w-lg"
+                      value={selectedService}
+                      onChange={(e) => setSelectedService(e.target.value)}
+                    >
+                      <option value="">— Выберите проект или услугу —</option>
+                      {SERVICES.map((s) => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                    {errors.selectedService && <p className="form-error">{errors.selectedService}</p>}
+                  </div>
+                )}
               </div>
 
               {/* Цель */}

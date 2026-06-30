@@ -419,7 +419,7 @@ function StatusCard({ visit, token, locale }: { visit: Visit; token: string; loc
   const [cancelled, setCancelled] = useState(false);
   const [localVisit, setLocalVisit] = useState(visit);
 
-  const canCancel = ["PENDING_MODERATION", "PENDING_HOST", "APPROVED"].includes(localVisit.status);
+  const canCancel = ["PENDING_MODERATION", "PENDING_HOST", "APPROVED"].includes(localVisit.status) && localVisit.status !== "CHECKED_IN";
 
   const handleCancel = async () => {
     if (!confirm(t("cancelConfirm"))) return;
