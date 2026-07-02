@@ -181,7 +181,15 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
               {/* Visitor info */}
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{color: cs.header}}>Посетитель</p>
-                <dl className="space-y-2 text-sm">
+                <div className="flex gap-4 mb-3">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/${String((result.visit_id % 10) + 1).padStart(4, "0")}.jpg`}
+                    alt={result.visitor_name}
+                    className="rounded-lg object-cover border-2 border-white shadow flex-shrink-0"
+                    style={{ width: 72, height: 92, borderColor: cs.border }}
+                  />
+                  <dl className="space-y-2 text-sm flex-1">
                   <div className="flex gap-2">
                     <dt className="text-text-muted w-32 flex-shrink-0">ФИО</dt>
                     <dd className="font-semibold text-text-primary">{result.visitor_name}</dd>
@@ -211,7 +219,8 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
                       <dd className="text-text-secondary whitespace-pre-wrap">{result.purpose}</dd>
                     </div>
                   )}
-                </dl>
+                  </dl>
+                </div>
               </div>
 
               {/* Host & timing */}

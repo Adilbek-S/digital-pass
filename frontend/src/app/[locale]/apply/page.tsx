@@ -76,6 +76,7 @@ export default function VisitorFormPage() {
   });
   const [equipment, setEquipment] = useState("");
   const [docNumber, setDocNumber] = useState("");
+  const [photoIndex, setPhotoIndex] = useState<number | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -132,6 +133,7 @@ export default function VisitorFormPage() {
       const name = FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)];
       setForm((prev) => ({ ...prev, visitor_name: name }));
       setDocNumber(randomDocNumber());
+      setPhotoIndex(Math.floor(Math.random() * 10) + 1);
       setOcrState("done");
     }, 1200);
   };
@@ -295,7 +297,7 @@ export default function VisitorFormPage() {
                       <button
                         type="button"
                         className="text-xs text-text-muted hover:text-text-primary flex-shrink-0"
-                        onClick={(ev) => { ev.stopPropagation(); setFile(null); setOcrState("idle"); set("visitor_name", ""); setDocNumber(""); if (fileInputRef.current) fileInputRef.current.value = ""; }}
+                        onClick={(ev) => { ev.stopPropagation(); setFile(null); setOcrState("idle"); set("visitor_name", ""); setDocNumber(""); setPhotoIndex(null); if (fileInputRef.current) fileInputRef.current.value = ""; }}
                       >
                         Удалить
                       </button>
@@ -303,6 +305,31 @@ export default function VisitorFormPage() {
                   </div>
                 </div>
               </div>
+
+              {/* Фото из документа */}
+              {ocrState === "done" && photoIndex !== null && (
+                <div className="md:col-span-2">
+                  <label className="form-label flex items-center gap-2">
+                    Фото
+                    <span className="text-xs font-normal px-2 py-0.5 rounded-full" style={{ background: "#d0fac9", color: "#2e7d32" }}>
+                      Распознано из документа
+                    </span>
+                  </label>
+                  <div className="flex items-center gap-5 px-5 py-4 rounded-xl border-2" style={{ borderColor: "#4caf50", background: "#f0faf0" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/${String(photoIndex).padStart(4, "0")}.jpg`}
+                      alt="Фото из документа"
+                      className="rounded-lg object-cover border-2 border-white shadow flex-shrink-0"
+                      style={{ width: 72, height: 92 }}
+                    />
+                    <div>
+                      <p className="font-medium text-sm" style={{ color: "#2e7d32" }}>Фотография успешно распознана</p>
+                      <p className="text-xs text-text-muted mt-1">Извлечено из скана документа</p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* ФИО */}
               <div className="md:col-span-2">
