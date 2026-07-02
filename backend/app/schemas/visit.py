@@ -125,6 +125,7 @@ class GuardScanResult(BaseModel):
     already_entered: bool
     entered_at: datetime | None
     exited_at: datetime | None
+    visitor_link_token: str | None = None
 
 
 class DepartmentOut(BaseModel):

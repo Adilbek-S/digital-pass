@@ -23,6 +23,13 @@ interface ScanResult {
   already_entered: boolean;
   entered_at: string | null;
   exited_at: string | null;
+  visitor_link_token: string | null;
+}
+
+function photoFromToken(token: string | null | undefined): string {
+  if (!token) return "/0001.png";
+  const idx = (parseInt(token.slice(0, 8), 16) % 10) + 1;
+  return `/${String(idx).padStart(4, "0")}.png`;
 }
 
 const COLOUR_STYLES: Record<string, { bg: string; border: string; text: string; header: string }> = {
@@ -184,7 +191,7 @@ export default function ScanPage({ params }: { params: Promise<{ locale: string 
                 <div className="flex gap-4 mb-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/${String((result.visit_id % 10) + 1).padStart(4, "0")}.png`}
+                    src={photoFromToken(result.visitor_link_token)}
                     alt={result.visitor_name}
                     className="rounded-lg object-cover border-2 border-white shadow flex-shrink-0"
                     style={{ width: 72, height: 92, borderColor: cs.border }}

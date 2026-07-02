@@ -42,6 +42,7 @@ def _build_result(visit: Visit, colour: str, message: str) -> GuardScanResult:
         already_entered=checkin is not None and checkin.entered_at is not None,
         entered_at=checkin.entered_at if checkin else None,
         exited_at=checkin.exited_at if checkin else None,
+        visitor_link_token=visit.visitor_link_token,
     )
 
 

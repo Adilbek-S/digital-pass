@@ -14,6 +14,12 @@ const FAKE_NAMES = [
   "Санжар Байтасов", "Асель Қожахметова", "Ербол Нұрмаханов",
 ];
 
+function photoFromToken(token: string | null | undefined): string {
+  if (!token) return "/0001.png";
+  const idx = (parseInt(token.slice(0, 8), 16) % 10) + 1;
+  return `/${String(idx).padStart(4, "0")}.png`;
+}
+
 function randomDocNumber() {
   const letters = "ABCDEFGHJKLMNPRSTUVWXYZ";
   const l1 = letters[Math.floor(Math.random() * letters.length)];
@@ -131,7 +137,9 @@ function InviteConfirmForm({
     setTimeout(() => {
       setForm((prev) => ({ ...prev, visitor_name: FAKE_NAMES[Math.floor(Math.random() * FAKE_NAMES.length)] }));
       setDocNumber(randomDocNumber());
-      setPhotoIndex(Math.floor(Math.random() * 10) + 1);
+      // derive photo from token so guard sees the same photo
+      const idx = (parseInt(token.slice(0, 8), 16) % 10) + 1;
+      setPhotoIndex(idx);
       setOcrState("done");
     }, 1200);
   };
@@ -303,7 +311,7 @@ function InviteConfirmForm({
                   <div className="flex items-center gap-5 px-5 py-4 rounded-xl border-2" style={{ borderColor: "#4caf50", background: "#f0faf0" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/${String(photoIndex).padStart(4, "0")}.png`}
+                      src={photoFromToken(token)}
                       alt="Фото из документа"
                       className="rounded-lg object-cover border-2 border-white shadow flex-shrink-0"
                       style={{ width: 72, height: 92 }}
