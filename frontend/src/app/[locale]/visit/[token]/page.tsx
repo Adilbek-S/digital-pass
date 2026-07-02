@@ -303,7 +303,7 @@ function InviteConfirmForm({
                   <div className="flex items-center gap-5 px-5 py-4 rounded-xl border-2" style={{ borderColor: "#4caf50", background: "#f0faf0" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/${String(photoIndex).padStart(4, "0")}.jpg`}
+                      src={`/${String(photoIndex).padStart(4, "0")}.png`}
                       alt="Фото из документа"
                       className="rounded-lg object-cover border-2 border-white shadow flex-shrink-0"
                       style={{ width: 72, height: 92 }}
